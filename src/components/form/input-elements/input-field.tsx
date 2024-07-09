@@ -72,7 +72,7 @@ export function SelectDropdown(props: SelectDropdownProps) {
     );
 };
 
-type SelectOption = { value: string; label: string };
+export type SelectOption = { value: string; label: string };
 type SelectFieldProps = Props & {
     options: SelectOption[];
     onChange?: (option: SelectOption | null) => SelectOption;
