@@ -6,6 +6,6 @@ interface CustomErrorMessageProps {
     [key: string]: any;
 }
 
-export default function CustomErrorMessage(props: CustomErrorMessageProps) {
+export function CustomErrorMessage(props: CustomErrorMessageProps) {
     return <small className={styles.error}>{props.children}</small>;
 };
