@@ -20,41 +20,15 @@ body {
     // Not sure if we need this as a fallback?
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background-color: u.color(neutral-10);
+    background-color: u.color(neutral-white);
     min-height: 100%;
-
-
-    // https://css-tricks.com/custom-scrollbars-in-webkit/
-    &::-webkit-scrollbar {
-        // display: none;
-        width: u.em(8);
-        background-color: u.color(txt-dark-1);
-    }
-
-    &::-webkit-scrollbar-track {
-        background-color: u.color(txt-dark-2);
-        border-radius: 100vw;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: u.color(txt-dark-1);
-        border-radius: 100vw; // Pill shape
-        border-right: none;
-        border-left: none;
-        cursor: grab;
-
-        &:hover {
-            background-color: var(u.$primary-color-key);
-        }
-    }
 }
 
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    // min-height: -webkit-fill-available;
-
+    
     // To make page content always occupy full viewport height
     &>#__next {
         min-height: 100%;
@@ -71,29 +45,4 @@ body {
 
 * {
     box-sizing: border-box;
-    // color: u.color(txt-dark-1);
-    // outline: none;
-
-    // https://stackoverflow.com/questions/25704650/disable-blue-highlight-when-touch-press-object-with-cursorpointer
-    // -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    // -webkit-tap-highlight-color: transparent;
-
-    &::selection {
-        background: u.color(primary-60);
-        color: u.color(neutral-00);
-    }
-
-    -webkit-tap-highlight-color: color(var(u.$primary-color-key), 0.2);
-}
-
-.h1 {
-	@include u.h1-styles();
-}
-
-h1 {
-	@include u.h1-styles();
-}
-
-p {
-	@include u.p-styles();
 }
