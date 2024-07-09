@@ -1,0 +1,23 @@
+$colors: (
+	primary-marine-blue: #022959,
+	primary-marine-blue: #142F49,
+	primary-purplish-blue: #5850EC,
+	primary-pastel-blue: #C7D2FE,
+	primary-light-blue: #B2D9E9,
+	primary-strawberry-red: #EF4444,
+	neutral-cool-gray: #A3A3A3,
+	neutral-light-gray: #E5E7EB,
+	neutral-magnolia: #F0F9FF,
+	neutral-alabaster: #F8FAFC,
+	neutral-white: #FFFFFF,
+);
+
+@function color($key) {
+	@return map-get($map: $colors, $key: $key);
+}
+
+// Add to image wrapper to show a black square while
+// image is still loading in
+@mixin load-image-background-color {
+	background: color(neutral-light-gray);
+}
