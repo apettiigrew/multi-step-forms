@@ -1,6 +1,8 @@
 @use "./../styles/utils/index" as u;
 
 $padding-top: 100;
+$inner-content-heading-space: 40;
+$gap: 30;
 
 .main {
     background-color: u.color(neutral-light-gray);
@@ -18,7 +20,7 @@ $padding-top: 100;
 .step-label-container {
     display: flex;
     flex-direction: column;
-    gap: u.rem(30);
+    gap: u.rem($gap);
 }
 
 .content {
@@ -42,7 +44,7 @@ $padding-top: 100;
 
     &>.right-content {
         padding-top: u.rem($padding-top);
-        background-color: black;
+        background-color: white;
         flex-basis: 70%;
         flex-grow: 1;
     }
@@ -52,6 +54,20 @@ $padding-top: 100;
     @include u.square(24);
 }
 
-.left-content-headings{
-    margin-bottom: u.rem(40);
+.left-content-headings {
+    margin-bottom: u.rem($inner-content-heading-space);
+}
+
+.right-content-headings {
+    margin-bottom: u.rem($inner-content-heading-space);
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    gap: u.rem($gap);
+
+    &>* {
+        width: 60%;
+    }
 }
