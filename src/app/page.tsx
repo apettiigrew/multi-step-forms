@@ -1,7 +1,7 @@
 import { SubHeading } from "@/components/text/subheading";
 import styles from "./page.module.scss";
 import { StepLabel } from "@/components/form/step-label/step-label";
-import { OneCirleIcon } from "@/components/shared/icons/icons";
+import { FourCirleIcon, OneCirleIcon, ThreeCirleIcon, TwoCirleIcon } from "@/components/shared/icons/icons";
 
 
 export default function CheckoutFormPage() {
@@ -22,15 +22,15 @@ export default function CheckoutFormPage() {
                 label={"Personal Details"}
               />
               <StepLabel
-                icon={<OneCirleIcon className={styles.icon} />}
+                icon={<TwoCirleIcon className={styles.icon} />}
                 label={"Shipping Address"}
               />
               <StepLabel
-                icon={<OneCirleIcon className={styles.icon} />}
+                icon={<ThreeCirleIcon className={styles.icon} />}
                 label={"Payment Method"}
               />
               <StepLabel
-                icon={<OneCirleIcon className={styles.icon} />}
+                icon={<FourCirleIcon className={styles.icon} />}
                 label={"Review"}
               />
 
