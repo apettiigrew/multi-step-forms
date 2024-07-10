@@ -1,61 +1,32 @@
 @use './colors' as c;
-@use './utils' as u;
 @use './functions' as f;
-@use './transitions' as t;
 @use './fonts' as fs;
 @use './media-queries' as mq;
 
-$default-text-color: c.color(primary-marine-blue);
+$default-text-color: c.color(neutral-black);
 
-// Inserted here to also style different elements lik other heading tags
-@mixin h1-styles() {
+@mixin h5-styles() {
 	color: $default-text-color;
 	font-family: fs.ff(primary);
 	font-weight: 700;
-	font-size: fs.fs(56);
-	line-height: 0.875; // From figma file
-	letter-spacing: 0.02em; // From figma file
-
-	// Font size media queries
-	@include fs.fs-mq(68, tablet_p);
-	@include fs.fs-mq(75, tablet_l);
-	@include fs.fs-mq(110, desktop_s);
-	@include fs.fs-mq(132, desktop);
+	font-size: fs.fs(23.04);
+	margin-bottom: f.rem(10);
 }
 
+@mixin h6-styles() {
+	color: $default-text-color;
+	font-family: fs.ff(primary);
+	font-weight: 700;
+	font-size: fs.fs(19.2);
+	margin-bottom: f.rem(10);
+}
 
 @mixin p-styles {
 	color: $default-text-color;
 	font-family: fs.ff(primary);
 	font-weight: 400;
 	font-style: normal;
-	line-height: 1.5; // Font size * 1.5
-	font-size: fs.fs(14);
-	letter-spacing: 0.02em;
-
-	@include fs.fs-mq(16, tablet_p);
-	@include fs.fs-mq(18, desktop_s);
-	@include fs.fs-mq(22, desktop);
-}
-
-// Inserted here to also style different elements lik other heading tags
-@mixin h1-styles() {
-	color: $default-text-color;
-	font-family: fs.ff(primary);
-	font-weight: 700;
-	font-size: fs.fs(56);
-	line-height: 0.875; // From figma file
-	letter-spacing: 0.02em; // From figma file
-
-	// Font size media queries
-	@include fs.fs-mq(68, tablet_p);
-	@include fs.fs-mq(75, tablet_l);
-	@include fs.fs-mq(110, desktop_s);
-	@include fs.fs-mq(132, desktop);
-}
-
-@mixin bold-styles {
-	font-size: inherit;
-	color: inherit;
-	font-weight: 600;
+	font-size: fs.fs(16);
+	line-height: 1.5;
+	margin-bottom: f.rem(10);
 }

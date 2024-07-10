@@ -1,4 +1,4 @@
-@use '../utils/index' as u;
+@use './../utils/index' as u;
 
 :root {
     // These serve as a basic backup
@@ -28,7 +28,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    
+
     // To make page content always occupy full viewport height
     &>#__next {
         min-height: 100%;
@@ -45,4 +45,17 @@ body {
 
 * {
     box-sizing: border-box;
+}
+
+
+h5 {
+    @include u.h5-styles();
+}
+
+h6 {
+    @include u.h6-styles();
+}
+
+p {
+    @include u.p-styles();
 }
