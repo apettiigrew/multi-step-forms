@@ -16,7 +16,6 @@ type InputFieldProps = Props;
 export function InputField(props: InputFieldProps) {
     const { name, label, required, ...restOfProps } = props;
 
-
     const labelText = useMemo(() => {
         return required ? `${label}*` : label;
     }, [label, required]);

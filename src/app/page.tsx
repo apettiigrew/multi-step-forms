@@ -3,6 +3,7 @@ import styles from "./page.module.scss";
 import { StepLabel } from "@/components/form/step-label/step-label";
 import { FourCirleIcon, OneCirleIcon, ThreeCirleIcon, TwoCirleIcon } from "@/components/shared/icons/icons";
 import { InputField } from "@/components/form/input-elements/input-field";
+import { AppButton, AppButtonVariation } from "@/components/shared/layout/buttons";
 
 
 export default function CheckoutPage() {
@@ -67,6 +68,20 @@ export default function CheckoutPage() {
                   required={true}
                 />
               </div>
+            </div>
+
+            <div className={styles["button-wrapper"]}>
+
+              <AppButton
+                ariaLabel="Next button"
+                variation={AppButtonVariation.whiteDefault}>
+                Back
+              </AppButton>
+              <AppButton
+                ariaLabel="Next button"
+                variation={AppButtonVariation.primaryDefault}>
+                Next
+              </AppButton>
             </div>
           </div>
         </div>

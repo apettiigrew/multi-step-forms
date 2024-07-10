@@ -7,7 +7,7 @@
     margin: u.rem(8) 0;
     box-sizing: border-box;
     border: u.rem(1.4) solid u.color(neutral-black);
-    border-radius: u.rem(4);
+    border-radius: u.rem(u.get-radius(desktop));
     font-size: u.rem(16);
     font-family: 'Arial', sans-serif;
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -18,12 +18,13 @@
     outline: none;
 }
 
-.label{
+.label {
     font-size: u.rem(16);
     line-height: u.rem(18);
     color: u.color(neutral-cool-gray);
     font-weight: 400;
 }
+
 .error {
     font-size: u.rem(16);
     line-height: u.rem(18);
