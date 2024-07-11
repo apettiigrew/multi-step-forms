@@ -6,6 +6,8 @@ import styles from "./input-field.module.scss";
 import { FormikProps, useField } from "formik";
 import { FormValues } from "@/app/page";
 import { propertiesOf } from "@/app/utils/constants";
+import { useCombineClassNames } from "@/hooks/use-combine-classnames";
+import { classIf } from "@/lib/styles-utils";
 
 const propof = propertiesOf<FormValues>();
 
@@ -28,6 +30,18 @@ export function InputField(props: InputFieldProps) {
         return required ? `${label}*` : label;
     }, [label, required]);
 
+    const hasError = useMemo(() => {
+        return meta.error && meta.touched;
+    }, [meta.error, meta.touched]);
+
+    const cn = [styles['input-field']];
+    if (hasError) {
+        cn.push(styles['error']);
+    }
+
+    const jcn = cn.join(" ");
+
+
     return (
         <div className="form-control">
             <label htmlFor={name} className={styles.label}>
@@ -36,12 +50,12 @@ export function InputField(props: InputFieldProps) {
             <input
                 id={name}
                 type={type}
-                className={styles['input-field']}
+                className={jcn}
                 {...field}
                 {...restOfProps}
             />
             {meta.error && meta.touched && (
-                <small className="error">{meta.error}</small>
+                <small className={styles["error-text"]}>{meta.error}</small>
             )}
         </div>
     );

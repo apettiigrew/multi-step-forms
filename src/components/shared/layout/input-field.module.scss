@@ -12,6 +12,10 @@
     font-size: u.rem(16);
     font-family: 'Arial', sans-serif;
     transition: border-color 0.3s, box-shadow 0.3s;
+
+    &.error {
+        border: u.rem(2) solid u.color(error);
+    }
 }
 
 .input-field:focus {
@@ -24,9 +28,13 @@
     line-height: u.rem(18);
     color: u.color(neutral-cool-gray);
     font-weight: 400;
+
+    &.error {
+        color: u.color(error);
+    }
 }
 
-.error {
+.error-text {
     font-size: u.rem(16);
     line-height: u.rem(18);
     color: u.color(error);
