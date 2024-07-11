@@ -7,6 +7,7 @@ import { SubHeading } from "@/components/text/subheading";
 import { useCallback } from "react";
 import styles from "./page.module.scss";
 import { SelectOption, InputField } from "@/components/shared/layout/input-field";
+import { AppCheckbox } from "@/components/shared/layout/app-checkbox";
 
 export default function CheckoutPage() {
 
@@ -55,50 +56,19 @@ export default function CheckoutPage() {
           </div>
           <div className={styles["right-content"]}>
             <div className={styles["right-content-headings"]}>
-              <SubHeading>Payment Method</SubHeading>
-              <p>Select the payment method.</p>
+              <SubHeading>Review</SubHeading>
+              <p className={styles["heading-text"]}>
+                Review the information to be sure they are accurate and if all is
+                good click the checkbox below and click the button to checkout.
+              </p>
             </div>
 
             <div>
               <div className={styles["form-content"]}>
-                <AppSelect
-                  label="Card Type"
-                  name="cardType"
-                  required={true}
-                  options={options}
-                  onChange={handleSelectChange}
-                  placeholder="Click to select card type"
-                />
-
-                <InputField
-                  name="cardNumber"
-                  label="Card Number"
-                  required={true}
-                />
-
-                <div className={styles["input-group"]}>
-                  <AppSelect
-                    label="Expiration Date"
-                    name="expireMonthDate"
-                    required={true}
-                    options={options}
-                    onChange={handleSelectChange}
-                    placeholder="Month"
-                  />
-
-                  <AppSelect
-                    name="expireMonthYear"
-                    required={true}
-                    options={options}
-                    onChange={handleSelectChange}
-                    placeholder="Year"
-                  />
-                </div>
-
-                <InputField
-                  name="cvv"
-                  label="CVV Number"
-                  required={true}
+                <AppCheckbox
+                  label="I agree to the terms and conditions"
+                  checked={false}
+                  onChange={(checked) => console.log(checked)}
                 />
               </div>
             </div>
@@ -121,6 +91,71 @@ export default function CheckoutPage() {
     </main>
   );
 }
+
+
+{/* <div className={styles["right-content"]}>
+<div className={styles["right-content-headings"]}>
+  <SubHeading>Payment Method</SubHeading>
+  <p>Select the payment method.</p>
+</div>
+
+<div>
+  <div className={styles["form-content"]}>
+    <AppSelect
+      label="Card Type"
+      name="cardType"
+      required={true}
+      options={options}
+      onChange={handleSelectChange}
+      placeholder="Click to select card type"
+    />
+
+    <InputField
+      name="cardNumber"
+      label="Card Number"
+      required={true}
+    />
+
+    <div className={styles["input-group"]}>
+      <AppSelect
+        label="Expiration Date"
+        name="expireMonthDate"
+        required={true}
+        options={options}
+        onChange={handleSelectChange}
+        placeholder="Month"
+      />
+
+      <AppSelect
+        name="expireMonthYear"
+        required={true}
+        options={options}
+        onChange={handleSelectChange}
+        placeholder="Year"
+      />
+    </div>
+
+    <InputField
+      name="cvv"
+      label="CVV Number"
+      required={true}
+    />
+  </div>
+</div>
+
+<div className={styles["button-wrapper"]}>
+  <AppButton
+    ariaLabel="Next button"
+    variation={AppButtonVariation.whiteDefault}>
+    Back
+  </AppButton>
+  <AppButton
+    ariaLabel="Next button"
+    variation={AppButtonVariation.primaryDefault}>
+    Next
+  </AppButton>
+</div>
+</div> */}
 
 {/* <div className={styles["right-content"]}>
 <div className={styles["right-content-headings"]}>
