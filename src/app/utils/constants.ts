@@ -1,4 +1,3 @@
-import { SelectOption } from "@/components/form/input-elements/input-field";
 
 type Country = { name: string, states: string[] };
 export const countries: Country[] = [

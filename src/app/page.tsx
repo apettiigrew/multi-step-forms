@@ -9,6 +9,7 @@ import styles from "./page.module.scss";
 import { SelectOption, InputField } from "@/components/shared/layout/input-field";
 import { AppCheckbox } from "@/components/shared/layout/app-checkbox";
 import { FormikProps, useFormik } from "formik";
+import { RenderIf } from "./utils/render-if";
 
 type FormValues = {
   firstName: string;
@@ -57,6 +58,7 @@ export default function CheckoutPage() {
   const nextStep = useCallback(() => setStep((prevStep) => prevStep + 1), []);
   const prevStep = useCallback(() => setStep((prevStep) => prevStep - 1), []);
 
+  const isBackButtonVisible = useMemo(() => step > 1, [step]);
   return (
     <main className={styles.main}>
       <div className={styles.container}>
@@ -88,24 +90,43 @@ export default function CheckoutPage() {
             </div>
           </div>
           <div className={styles["right-content"]}>
-            <FormContent step={step} formik={formik} />
+            <form onSubmit={formik.handleSubmit}>
+              <FormContent step={step} formik={formik} />
 
-            <div className={styles["button-wrapper"]}>
-              <AppButton
-                ariaLabel="Next button"
-                variation={AppButtonVariation.whiteDefault}
-                onClick={prevStep}
-              >
-                Back
-              </AppButton>
-              <AppButton
-                ariaLabel="Next button"
-                variation={AppButtonVariation.primaryDefault}
-                onClick={nextStep}
-              >
-                Next
-              </AppButton>
-            </div>
+              <div className={styles["button-wrapper"]}>
+
+                <RenderIf isTrue={isBackButtonVisible}>
+                  <AppButton
+                    type="button"
+                    ariaLabel="Next button"
+                    variation={AppButtonVariation.whiteDefault}
+                    onClick={prevStep}
+                  >
+                    Back
+                  </AppButton>
+                </RenderIf>
+                <RenderIf isTrue={step < 4}>
+                  <AppButton
+                    type="button"
+                    ariaLabel="Next button"
+                    variation={AppButtonVariation.primaryDefault}
+                    onClick={nextStep}
+                  >
+                    Next
+                  </AppButton>
+                </RenderIf>
+                <RenderIf isTrue={step === 4}>
+                  <AppButton
+                    type="submit"
+                    ariaLabel="Next button"
+                    variation={AppButtonVariation.primaryDefault}
+                  >
+                    Submit
+                  </AppButton>
+                </RenderIf>
+              </div>
+            </form>
+
           </div>
         </div>
       </div>
