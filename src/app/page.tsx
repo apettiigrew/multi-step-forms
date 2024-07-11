@@ -73,25 +73,31 @@ export default function CheckoutPage() {
                   required={true}
                   options={options}
                   onChange={handleSelectChange}
-                  placeholder="Select an option"
+                  placeholder="Click to select a country"
                 />
 
-                {/* <InputField
-                  name="country"
-                  label="Country"
-                  required={true}
-                /> */}
                 <InputField
                   name="state"
                   label="State/Province"
                   required={true}
                 />
 
-                <InputField
-                  name="zipcode"
-                  label="Zip Code"
-                  required={true}
-                />
+                <div className={styles["shipping-group"]}>
+                  <InputField
+                    name="zipCode"
+                    label="ZIP / Postal Code"
+                    required={true}
+                  />
+
+                  <AppSelect
+                    label="Shipping Method"
+                    name="shippingMethod"
+                    required={true}
+                    options={options}
+                    onChange={handleSelectChange}
+                    placeholder="Click to select"
+                  />
+                </div>
               </div>
             </div>
 

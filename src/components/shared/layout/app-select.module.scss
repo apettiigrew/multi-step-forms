@@ -2,7 +2,6 @@
 
 .custom-select {
     position: relative;
-    // width: u.re;
 }
 
 .select-input {
@@ -13,18 +12,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 u.rem(1) u.rem(2) rgba(0, 0, 0, 0.15);
     transition: box-shadow 0.2s ease;
 }
 
 .select-input:after {
     content: '\25BC';
     font-size: u.rem(12);
-    color: u.color(primary-pastel-blue);
+    color: u.color(neutral-cool-gray);
 }
 
 .select-input:hover {
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: u.rem(0) u.rem(2) u.rem(3) rgba(0, 0, 0, 0.2);
 }
 
 .select-dropdown {
@@ -32,7 +31,7 @@
     top: calc(100% + u.rem(5));
     left: 0;
     right: 0;
-    border: u.rem(1) solid #d4d4d5;
+    border: u.rem(1) solid u.color(neutral-light-gray);
     border-radius: u.rem(5);
     background-color: u.color(neutral-white);
     z-index: 1000;
