@@ -8,57 +8,69 @@ import { useCallback, useMemo, useState } from "react";
 import styles from "./page.module.scss";
 import { SelectOption, InputField } from "@/components/shared/layout/input-field";
 import { AppCheckbox } from "@/components/shared/layout/app-checkbox";
-import { FormikProps, useFormik } from "formik";
+import { Formik, Form, FormikProps, useFormik, FormikValues } from "formik";
 import { RenderIf } from "./utils/render-if";
+import { validationSchema } from "./validation-schema";
+import { propertiesOf } from "./utils/constants";
 
-type FormValues = {
+export type FormValues = {
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
-  streetAddress: string;
-  country: string;
-  state: string;
-  postalCode: string;
-  shippingMethod: string;
-  cardType: string;
-  cardNumber: string;
-  expireMonthDate: number;
-  expireMonthYear: number;
-  cvv: string;
-  termsAndConditions: boolean;
+  // streetAddress: string;
+  // country: string;
+  // state: string;
+  // postalCode: string;
+  // shippingMethod: string;
+  // cardType: string;
+  // cardNumber: string;
+  // expireMonthDate: number;
+  // expireMonthYear: number;
+  // cvv: string;
+  // termsAndConditions: boolean;
+};
+
+const initialValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phoneNumber: "",
+  // streetAddress: "",
+  // country: "",
+  // state: "",
+  // postalCode: "",
+  // shippingMethod: "",
+  // cardType: "",
+  // cardNumber: "",
+  // expireMonthDate: 0,
+  // expireMonthYear: 0,
+  // cvv: "",
+  // termsAndConditions: false,
 };
 
 export default function CheckoutPage() {
   const [step, setStep] = useState(1);
+  const nextStep = useCallback(async (formik: FormikProps<FormValues>) => {
+    if (!formik.isValid) {
+      // Submit the form to force show the fields that are invalid.
+      // Note: Formik first runs throught a series of validation steps before actuall call the onSubmit function.
+      formik.submitForm();
+      return;
+    }
 
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      streetAddress: "",
-      country: "",
-      state: "",
-      postalCode: "",
-      shippingMethod: "",
-      cardType: "",
-      cardNumber: "",
-      expireMonthDate: 0,
-      expireMonthYear: 0,
-      cvv: "",
-      termsAndConditions: false,
-    },
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-
-  const nextStep = useCallback(() => setStep((prevStep) => prevStep + 1), []);
+    setStep((prevStep) => prevStep + 1)
+  }, []);
   const prevStep = useCallback(() => setStep((prevStep) => prevStep - 1), []);
-
   const isBackButtonVisible = useMemo(() => step > 1, [step]);
+
+
+
+  const onSubmit = useCallback((values: FormValues) => {
+
+  }, []);
+
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
@@ -90,43 +102,46 @@ export default function CheckoutPage() {
             </div>
           </div>
           <div className={styles["right-content"]}>
-            <form onSubmit={formik.handleSubmit}>
-              <FormContent step={step} formik={formik} />
+            <Formik {...{ initialValues, validationSchema: validationSchema[step - 1], onSubmit, validateOnMount: true }}>
+              {(formik) => (
+                <Form>
+                  <FormContent step={step} formik={formik} />
+                  <div className={styles["button-wrapper"]}>
+                    <RenderIf isTrue={isBackButtonVisible}>
+                      <AppButton
+                        type="button"
+                        ariaLabel="Next button"
+                        variation={AppButtonVariation.whiteDefault}
+                        onClick={prevStep}
+                      >
+                        Back
+                      </AppButton>
+                    </RenderIf>
+                    <RenderIf isTrue={step < 4}>
+                      <AppButton
+                        type="button"
+                        ariaLabel="Next button"
+                        variation={AppButtonVariation.primaryDefault}
+                        onClick={() => { nextStep(formik) }}
+                      >
+                        Next
+                      </AppButton>
+                    </RenderIf>
+                    <RenderIf isTrue={step === 4}>
+                      <AppButton
+                        disabled={!formik.isValid}
+                        type="submit"
+                        ariaLabel="Next button"
+                        variation={AppButtonVariation.primaryDefault}
+                      >
+                        Submit
+                      </AppButton>
+                    </RenderIf>
+                  </div>
+                </Form>
 
-              <div className={styles["button-wrapper"]}>
-
-                <RenderIf isTrue={isBackButtonVisible}>
-                  <AppButton
-                    type="button"
-                    ariaLabel="Next button"
-                    variation={AppButtonVariation.whiteDefault}
-                    onClick={prevStep}
-                  >
-                    Back
-                  </AppButton>
-                </RenderIf>
-                <RenderIf isTrue={step < 4}>
-                  <AppButton
-                    type="button"
-                    ariaLabel="Next button"
-                    variation={AppButtonVariation.primaryDefault}
-                    onClick={nextStep}
-                  >
-                    Next
-                  </AppButton>
-                </RenderIf>
-                <RenderIf isTrue={step === 4}>
-                  <AppButton
-                    type="submit"
-                    ariaLabel="Next button"
-                    variation={AppButtonVariation.primaryDefault}
-                  >
-                    Submit
-                  </AppButton>
-                </RenderIf>
-              </div>
-            </form>
-
+              )}
+            </Formik>
           </div>
         </div>
       </div>
@@ -135,7 +150,7 @@ export default function CheckoutPage() {
 }
 
 interface ParentFormProps {
-  formik: FormikProps<FormValues>;
+  formik?: FormikProps<FormValues>;
 }
 interface FormContentProps extends ParentFormProps {
   step: number;
@@ -145,13 +160,13 @@ function FormContent(props: FormContentProps) {
 
   switch (step) {
     case 1:
-      return <PersonalDetailsForm formik={formik} />;
-    case 2:
-      return <ShippingAddressForm formik={formik} />;
-    case 3:
-      return <PaymentMethodForm formik={formik} />;
-    case 4:
-      return <ReviewForm formik={formik} />;
+      return <PersonalDetailsForm />;
+    // case 2:
+    //   return <ShippingAddressForm formik={formik} />;
+    // case 3:
+    //   return <PaymentMethodForm formik={formik} />;
+    // case 4:
+    //   return <ReviewForm formik={formik} />;
     default:
       return null;;
   }
@@ -173,25 +188,30 @@ function PersonalDetailsForm(props: PersonalDetailsFormProps) {
       <div>
         <div className={styles["form-content"]}>
           <InputField
+            // formik={formik}
+            type="text"
             name="firstName"
             label="First Name"
             required={true}
           />
           <InputField
+            type="text"
             name="lastName"
             label="Last Name"
             required={true}
           />
           <InputField
+            type="text"
             name="email"
             label="Email Address"
             required={true}
           />
 
           <InputField
+            type="text"
             name="phoneNumber"
             label="Phone Number"
-            required={true}
+            required={false}
           />
         </div>
       </div>
@@ -204,7 +224,6 @@ interface ShippingAddressFormProps extends ParentFormProps {
 
 }
 function ShippingAddressForm(props: ShippingAddressFormProps) {
-
 
   const handleSelectChange = useCallback((selectedOption: SelectOption) => {
     console.log(selectedOption);
@@ -227,6 +246,7 @@ function ShippingAddressForm(props: ShippingAddressFormProps) {
 
       <div className={styles["form-content"]}>
         <InputField
+          type="text"
           name="streetAddress"
           label="Street Address"
           required={true}
@@ -242,6 +262,7 @@ function ShippingAddressForm(props: ShippingAddressFormProps) {
         />
 
         <InputField
+          type="text"
           name="state"
           label="State/Province"
           required={true}
@@ -249,6 +270,7 @@ function ShippingAddressForm(props: ShippingAddressFormProps) {
 
         <div className={styles["input-group"]}>
           <InputField
+            type="text"
             name="zipCode"
             label="ZIP / Postal Code"
             required={true}
@@ -303,6 +325,7 @@ function PaymentMethodForm(props: PaymentMethodFormProps) {
         />
 
         <InputField
+          type="text"
           name="cardNumber"
           label="Card Number"
           required={true}
@@ -328,6 +351,7 @@ function PaymentMethodForm(props: PaymentMethodFormProps) {
         </div>
 
         <InputField
+          type="text"
           name="cvv"
           label="CVV Number"
           required={true}

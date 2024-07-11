@@ -3,18 +3,26 @@
 // import Select, { ActionMeta } from 'react-select';
 import { useMemo } from "react";
 import styles from "./input-field.module.scss";
+import { FormikProps, useField } from "formik";
+import { FormValues } from "@/app/page";
+import { propertiesOf } from "@/app/utils/constants";
+
+const propof = propertiesOf<FormValues>();
 
 type Props = {
     name: string;
     label: string;
     required: boolean;
-    [key: string]: any;
+    type: string;
+    // formik: FormikProps<FormValues>;
+    // [key: string]: any;
 };
 
 type InputFieldProps = Props;
 
 export function InputField(props: InputFieldProps) {
-    const { name, label, required, ...restOfProps } = props;
+    const { type, name, label, required, ...restOfProps } = props;
+    const [field, meta, helpers] = useField(name);
 
     const labelText = useMemo(() => {
         return required ? `${label}*` : label;
@@ -26,13 +34,15 @@ export function InputField(props: InputFieldProps) {
                 {labelText}
             </label>
             <input
-                className={styles['input-field']}
                 id={name}
-                name={name}
-                type="text"
-            // onChange={formik.handleChange}
-            // value={formik.values.email}
+                type={type}
+                className={styles['input-field']}
+                {...field}
+                {...restOfProps}
             />
+            {meta.error && meta.touched && (
+                <small className="error">{meta.error}</small>
+            )}
         </div>
     );
 };
