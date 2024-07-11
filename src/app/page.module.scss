@@ -80,16 +80,19 @@ $gap: 30;
     gap: u.rem($gap);
 }
 
-.shipping-group {
+.input-group {
     display: flex;
     gap: u.rem($gap);
-
-    &>:first-child {
-        flex-basis: 30%;
-    }
-
-    &>:nth-child(2) {
-        flex-basis: 70%;
+    &>*{
         flex: 1 0;
     }
+    
+    // &>:first-child {
+    //     flex-basis: 30%;
+    // }
+
+    // &>:nth-child(2) {
+    //     flex-basis: 70%;
+    //     flex: 1 0;
+    // }
 }

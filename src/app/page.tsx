@@ -55,49 +55,51 @@ export default function CheckoutPage() {
           </div>
           <div className={styles["right-content"]}>
             <div className={styles["right-content-headings"]}>
-              <SubHeading>Shipping Address</SubHeading>
-              <p>Enter the address you want your order to be shipped to</p>
+              <SubHeading>Payment Method</SubHeading>
+              <p>Select the payment method.</p>
             </div>
 
             <div>
               <div className={styles["form-content"]}>
-                <InputField
-                  name="streetAddress"
-                  label="Street Address"
-                  required={true}
-                />
-
                 <AppSelect
-                  label="Country"
-                  name="country"
+                  label="Card Type"
+                  name="cardType"
                   required={true}
                   options={options}
                   onChange={handleSelectChange}
-                  placeholder="Click to select a country"
+                  placeholder="Click to select card type"
                 />
 
                 <InputField
-                  name="state"
-                  label="State/Province"
+                  name="cardNumber"
+                  label="Card Number"
                   required={true}
                 />
 
-                <div className={styles["shipping-group"]}>
-                  <InputField
-                    name="zipCode"
-                    label="ZIP / Postal Code"
-                    required={true}
-                  />
-
+                <div className={styles["input-group"]}>
                   <AppSelect
-                    label="Shipping Method"
-                    name="shippingMethod"
+                    label="Expiration Date"
+                    name="expireMonthDate"
                     required={true}
                     options={options}
                     onChange={handleSelectChange}
-                    placeholder="Click to select"
+                    placeholder="Month"
+                  />
+
+                  <AppSelect
+                    name="expireMonthYear"
+                    required={true}
+                    options={options}
+                    onChange={handleSelectChange}
+                    placeholder="Year"
                   />
                 </div>
+
+                <InputField
+                  name="cvv"
+                  label="CVV Number"
+                  required={true}
+                />
               </div>
             </div>
 
@@ -120,9 +122,67 @@ export default function CheckoutPage() {
   );
 }
 
-function Select() {
+{/* <div className={styles["right-content"]}>
+<div className={styles["right-content-headings"]}>
+  <SubHeading>Shipping Address</SubHeading>
+  <p>Enter the address you want your order to be shipped to</p>
+</div>
 
-}
+<div>
+  <div className={styles["form-content"]}>
+    <InputField
+      name="streetAddress"
+      label="Street Address"
+      required={true}
+    />
+
+    <AppSelect
+      label="Country"
+      name="country"
+      required={true}
+      options={options}
+      onChange={handleSelectChange}
+      placeholder="Click to select a country"
+    />
+
+    <InputField
+      name="state"
+      label="State/Province"
+      required={true}
+    />
+
+    <div className={styles["shipping-group"]}>
+      <InputField
+        name="zipCode"
+        label="ZIP / Postal Code"
+        required={true}
+      />
+
+      <AppSelect
+        label="Shipping Method"
+        name="shippingMethod"
+        required={true}
+        options={options}
+        onChange={handleSelectChange}
+        placeholder="Click to select"
+      />
+    </div>
+  </div>
+</div>
+
+<div className={styles["button-wrapper"]}>
+  <AppButton
+    ariaLabel="Next button"
+    variation={AppButtonVariation.whiteDefault}>
+    Back
+  </AppButton>
+  <AppButton
+    ariaLabel="Next button"
+    variation={AppButtonVariation.primaryDefault}>
+    Next
+  </AppButton>
+</div>
+</div> */}
 
 
 // <div className={styles["right-content-headings"]}>

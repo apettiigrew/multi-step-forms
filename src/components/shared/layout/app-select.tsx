@@ -7,7 +7,7 @@ interface Option {
 }
 
 interface AppSelectProps {
-    label: string;
+    label?: string;
     name: string;
     required: boolean;
     options: Option[];
@@ -16,7 +16,7 @@ interface AppSelectProps {
 }
 
 export function AppSelect(props: AppSelectProps) {
-    const { label,required, name, options, onChange, placeholder } = props;
+    const { label, required, name, options, onChange, placeholder } = props;
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -41,6 +41,11 @@ export function AppSelect(props: AppSelectProps) {
     }, []);
 
     const labelText = useMemo(() => {
+        if (!label) {
+            "&N"
+            return <small style={{ display: "hidden" }}>&nbsp;</small>;
+        }
+
         return required ? `${label}*` : label;
     }, [label, required]);
 
