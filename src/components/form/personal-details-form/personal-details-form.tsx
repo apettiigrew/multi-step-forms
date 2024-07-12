@@ -68,3 +68,12 @@ export function PersonalDetailsForm(props: PersonalDetailsFormProps) {
         </>
     )
 }
+
+export function PersonalDetailsFormHeading() {
+    return (
+        <>
+            <SubHeading>Step 1</SubHeading>
+            <p>Enter your personal information to continue to checkout.</p>
+        </>
+    )
+}

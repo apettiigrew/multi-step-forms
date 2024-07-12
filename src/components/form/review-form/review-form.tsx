@@ -31,6 +31,16 @@ export function ReviewForm(props: ReviewFormProps) {
     );
 }
 
+export function ReviewFormHeading() {
+    return (
+        <>
+            <SubHeading>Step 4</SubHeading>
+            <p>Review the information to be sure they are accurate and if all is good click the checkbox below and click the button to checkout.</p>
+        </>
+    )
+}
+
+
 ReviewForm.initialValues = {
     termsAndConditions: false,
 }
