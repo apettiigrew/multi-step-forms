@@ -3,30 +3,29 @@
 
 import React from 'react';
 import styles from "./app-checkbox.module.scss";
+import { useField } from 'formik';
 
 interface AppCheckboxProps {
+    name: string;
     label: string;
-    checked: boolean;
-    onChange: (checked: boolean) => void;
+    required?: boolean;
+    onChange?: (checked: boolean) => void;
+    validate?: (value: string) => string | undefined;
 }
 
 export function AppCheckbox(props: AppCheckboxProps) {
-    const { label, checked, onChange } = props;
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(event.target.checked);
-    };
-
+    const { name, label, required, onChange, validate, ...restOfProps } = props;
+    const [field, meta, helpers] = useField({name,  validate});
     return (
-        <label className={styles.checkbox}>
-            <input
-                className={styles.input}
-                type="checkbox"
-                checked={checked}
-                onChange={handleCheckboxChange}
-            />
-            <span className={styles["checkbox-label"]}>{label}</span>
-        </label>
+        <div className="form-control">
+            <label className={styles["checkbox-option"]}>
+                <input className={styles.input} type="checkbox" {...restOfProps} {...field} />
+                {label}
+            </label>
+            {meta.error && meta.touched && (
+                <small className={styles["error-text"]}>{meta.error}</small>
+            )}
+        </div>
     );
 };
-
 

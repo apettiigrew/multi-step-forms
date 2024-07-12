@@ -3,6 +3,7 @@ import { AppCheckbox } from "@/components/shared/layout/app-checkbox";
 import { SubHeading } from "@/components/text/subheading";
 import styles from "./review-form.module.scss";
 import * as Yup from "yup";
+import { isRequired } from "@/app/validation-schema";
 
 interface ReviewFormProps extends ParentFormProps { }
 export function ReviewForm(props: ReviewFormProps) {
@@ -20,9 +21,10 @@ export function ReviewForm(props: ReviewFormProps) {
 
             <div className={styles["form-content"]}>
                 <AppCheckbox
+                    name="termsAndConditions"
                     label="I agree to the terms and conditions"
-                    checked={false}
-                    onChange={(checked) => console.log(checked)}
+                    required={true}
+                    validate={isRequired}
                 />
             </div>
         </>
