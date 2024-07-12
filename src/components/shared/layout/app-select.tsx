@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { FormikProps, FormikValues, useField, useFormikContext } from 'formik';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from "./app-select.module.scss";
 interface Option {
     value: string;
@@ -11,20 +12,27 @@ interface AppSelectProps {
     name: string;
     required: boolean;
     options: Option[];
-    onChange: (selectedOption: Option) => void;
+    // formik?: FormikProps<FormikValues>,
+    onChange?: (selectedOption: Option) => void;
     placeholder?: string;
 }
 
 export function AppSelect(props: AppSelectProps) {
     const { label, required, name, options, onChange, placeholder } = props;
+    const [field, meta, helpers] = useField(name);
+    const { setFieldValue, values } = useFormikContext();
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+    const selectedOpt = options.find((option) => option.value === field.value);
+
+    const [selectedOption, setSelectedOption] = useState<Option | null>(selectedOpt || null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleOptionClick = (option: Option) => {
         setSelectedOption(option);
         setIsOpen(false);
-        onChange(option);
+        setFieldValue(name, option.value);
+        // helpers.setValue(option.value);
+        // field.value = option.value;
     };
 
     const handleDocumentClick = (event: MouseEvent) => {
@@ -42,19 +50,29 @@ export function AppSelect(props: AppSelectProps) {
 
     const labelText = useMemo(() => {
         if (!label) {
-            "&N"
             return <small style={{ display: "hidden" }}>&nbsp;</small>;
         }
 
         return required ? `${label}*` : label;
     }, [label, required]);
 
+    const hasError = useMemo(() => {
+        return meta.error && meta.touched;
+    }, [meta.error, meta.touched]);
+
+    const cn = [styles["select-input"]];
+    if (hasError) {
+        cn.push(styles['error']);
+    }
+
+    const jcn = cn.join(" ");
+
     return (
-        <div className={styles["custom-select"]} ref={dropdownRef}>
+        <div defaultValue={field.value} className={styles["custom-select"]} ref={dropdownRef}>
             <label htmlFor={name} className={styles.label}>
                 {labelText}
             </label>
-            <div className={styles["select-input"]} onClick={() => setIsOpen(!isOpen)}>
+            <div className={jcn} onClick={() => setIsOpen(!isOpen)}>
                 {selectedOption ? selectedOption.label : placeholder || 'Select an option'}
             </div>
             {isOpen && (
@@ -71,6 +89,9 @@ export function AppSelect(props: AppSelectProps) {
                 </div>
             )
             }
+            {meta.error && meta.touched && (
+                <small className={styles["error-text"]}>{meta.error}</small>
+            )}
         </div >
     );
 };

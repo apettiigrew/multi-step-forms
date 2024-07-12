@@ -2,6 +2,8 @@
 
 .custom-select {
     position: relative;
+
+
 }
 
 .select-input {
@@ -14,6 +16,11 @@
     justify-content: space-between;
     box-shadow: 0 u.rem(1) u.rem(2) rgba(0, 0, 0, 0.15);
     transition: box-shadow 0.2s ease;
+
+    &.error {
+        border: u.rem(2) solid u.color(error);
+    }
+
 }
 
 .select-input:after {
@@ -59,5 +66,13 @@
     font-size: u.rem(16);
     line-height: u.rem(18);
     color: u.color(neutral-cool-gray);
+    font-weight: 400;
+}
+
+
+.error-text {
+    font-size: u.rem(16);
+    line-height: u.rem(18);
+    color: u.color(error);
     font-weight: 400;
 }

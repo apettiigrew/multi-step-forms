@@ -1,17 +1,16 @@
 "use client";
 import { StepLabel } from "@/components/form/step-label/step-label";
 import { FourCirleIcon, OneCirleIcon, ThreeCirleIcon, TwoCirleIcon } from "@/components/shared/icons/icons";
+import { AppCheckbox } from "@/components/shared/layout/app-checkbox";
 import { AppSelect } from "@/components/shared/layout/app-select";
 import { AppButton, AppButtonVariation } from "@/components/shared/layout/buttons";
+import { InputField } from "@/components/shared/layout/input-field";
 import { SubHeading } from "@/components/text/subheading";
-import { useCallback, useMemo, useState } from "react";
+import { Form, Formik, FormikProps, FormikValues } from "formik";
+import { useMemo, useState } from "react";
+import * as Yup from "yup";
 import styles from "./page.module.scss";
-import { SelectOption, InputField } from "@/components/shared/layout/input-field";
-import { AppCheckbox } from "@/components/shared/layout/app-checkbox";
-import { Formik, Form, FormikProps, useFormik, FormikValues } from "formik";
 import { RenderIf } from "./utils/render-if";
-import { validationSchema } from "./validation-schema";
-import { propertiesOf } from "./utils/constants";
 
 export type FormValues = {
   firstName: string;
@@ -50,30 +49,40 @@ const initialValues = {
 };
 
 export default function CheckoutPage() {
-  const [step, setStep] = useState(1);
-  const nextStep = useCallback(async (formik: FormikProps<FormValues>) => {
-    console.log("I was called for step: ", step);
-    console.log("Formik values: ", formik.values);
-    console.log("Formik errors: ", formik.errors);
-    console.log("Formik touched: ", formik.touched);
-    console.log("Formik isValid: ", formik.isValid);
-    if (!formik.isValid) {
-      // Submit the form to force show the fields that are invalid.
-      // Note: Formik first runs throught a series of validation steps before actuall call the onSubmit function.
-      formik.submitForm();
-      return;
+  const steps = [PersonalDetailsForm, ShippingAddressForm, PaymentMethodForm, ReviewForm];
+  const [activeStep, setActiveStep] = useState(0);
+  const CurrentStep = steps[activeStep];
+  const { validationSchema } = CurrentStep;
+
+  const initialValues = steps.reduce((values, { initialValues: initValues }) => ({
+    ...values,
+    ...initValues,
+  }), {});
+
+  const isLastStep = () => activeStep === steps.length - 1;
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const submitForm = async (values: FormikValues) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    alert(JSON.stringify(values, null, 2));
+  };
+
+  const handleSubmit = async (values: FormikValues) => {
+    if (!isLastStep()) {
+      handleNext();
+    } else {
+      submitForm(values)
     }
+  };
 
-    setStep((prevStep) => prevStep + 1)
-  }, [step]);
-
-  const prevStep = useCallback(() => setStep((prevStep) => prevStep - 1), [step]);
-  const isBackButtonVisible = useMemo(() => step > 1, [step]);
-
-  const onSubmit = useCallback((values: FormValues) => {
-
-  }, []);
-
+  const isBackButtonVisible = useMemo(() => activeStep > 0, [activeStep]);
 
   return (
     <main className={styles.main}>
@@ -107,37 +116,36 @@ export default function CheckoutPage() {
           </div>
           <div className={styles["right-content"]}>
             <Formik
-              {...{
-                initialValues,
-                validationSchema: validationSchema[step - 1],
-                onSubmit,
-                validateOnMount: true
-              }}>
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
               {(formik) => (
                 <Form>
-                  <FormContent step={step} formik={formik} />
+                  <CurrentStep />
+
                   <div className={styles["button-wrapper"]}>
                     <RenderIf isTrue={isBackButtonVisible}>
                       <AppButton
                         type="button"
                         ariaLabel="Next button"
                         variation={AppButtonVariation.whiteDefault}
-                        onClick={prevStep}
+                        onClick={handleBack}
                       >
                         Back
                       </AppButton>
                     </RenderIf>
-                    <RenderIf isTrue={step < 4}>
+                    <RenderIf isTrue={activeStep < 4}>
                       <AppButton
-                        type="button"
+                        type="submit"
                         ariaLabel="Next button"
                         variation={AppButtonVariation.primaryDefault}
-                        onClick={() => { nextStep(formik) }}
+                      // onClick={handleNext}
                       >
                         Next
                       </AppButton>
                     </RenderIf>
-                    <RenderIf isTrue={step === 4}>
+                    <RenderIf isTrue={activeStep === 4}>
                       <AppButton
                         disabled={!formik.isValid}
                         type="submit"
@@ -160,23 +168,23 @@ export default function CheckoutPage() {
 }
 
 interface ParentFormProps {
-  formik?: FormikProps<FormValues>;
+  formik?: FormikProps<FormikValues>,
 }
 interface FormContentProps extends ParentFormProps {
   step: number;
 }
 function FormContent(props: FormContentProps) {
-  const { step, formik } = props;
+  const { step } = props;
 
   switch (step) {
-    case 1:
+    case 0:
       return <PersonalDetailsForm />;
-    case 2:
+    case 1:
       return <ShippingAddressForm />;
-    // case 3:
-    //   return <PaymentMethodForm formik={formik} />;
-    // case 4:
-    //   return <ReviewForm formik={formik} />;
+    case 2:
+      return <PaymentMethodForm />;
+    case 4:
+      return <ReviewForm />;
     default:
       return null;;
   }
@@ -186,6 +194,21 @@ function FormContent(props: FormContentProps) {
 interface PersonalDetailsFormProps extends ParentFormProps {
 
 }
+
+PersonalDetailsForm.initialValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phoneNumber: "",
+}
+
+PersonalDetailsForm.validationSchema = Yup.object().shape({
+  firstName: Yup.string().required("Please enter your first name").min(2, "Must be at least 2 characters").max(20, 'Must be 20 characters or less'),
+  lastName: Yup.string().required("Please enter your last name").min(2, "Must be at least 2 characters").max(20, 'Must be 20 characters or less'),
+  email: Yup.string().email().required("Please enter your email"),
+  phoneNumber: Yup.string().matches(/^[0-9]{10}/, "Please enter a valid phone number"),
+});
+
 function PersonalDetailsForm(props: PersonalDetailsFormProps) {
   const { formik } = props;
   return (
@@ -228,23 +251,30 @@ function PersonalDetailsForm(props: PersonalDetailsFormProps) {
   )
 }
 
-
-interface ShippingAddressFormProps extends ParentFormProps {
-
-}
+interface ShippingAddressFormProps extends ParentFormProps { }
 function ShippingAddressForm(props: ShippingAddressFormProps) {
 
-  const handleSelectChange = useCallback((selectedOption: SelectOption) => {
-    console.log(selectedOption);
-  }, []);
+  const options = [
+    { label: "Option 1", value: "option1" },
+    { label: "Option 2", value: "option2" },
+    { label: "Option 3", value: "option3" },
+  ]
 
-  const options: SelectOption[] = useMemo(() => {
-    return [
-      { value: 'option1', label: 'Option 1' },
-      { value: 'option2', label: 'Option 2' },
-      { value: 'option3', label: 'Option 3' },
-    ];
-  }, [])
+  const countryOptions = [
+    { label: "Nigeria", value: "nigeria" },
+    { label: "India", value: "india" },
+    { label: "United States of America", value: "usa" },
+    { label: "Japan", value: "japan" },
+    { label: "Ghana", value: "ghana" },
+    { label: "Ivory Coast", value: "ivorycoast" },
+    { label: "England", value: "england" },
+  ];
+
+  const shippingMethodOptions = [
+    { value: 'standard', label: 'Standard Shipping' },
+    { value: 'express', label: 'Express Shipping' },
+    { value: 'overnight', label: 'Overnight Shipping' },
+  ];
 
   return (
     <>
@@ -265,8 +295,7 @@ function ShippingAddressForm(props: ShippingAddressFormProps) {
           label="Country"
           name="country"
           required={true}
-          options={options}
-          onChange={handleSelectChange}
+          options={countryOptions}
           placeholder="Click to select a country"
         />
 
@@ -280,7 +309,7 @@ function ShippingAddressForm(props: ShippingAddressFormProps) {
         <div className={styles["input-group"]}>
           <InputField
             type="text"
-            name="zipCode"
+            name="postalCode"
             label="ZIP / Postal Code"
             required={true}
           />
@@ -289,8 +318,7 @@ function ShippingAddressForm(props: ShippingAddressFormProps) {
             label="Shipping Method"
             name="shippingMethod"
             required={true}
-            options={options}
-            onChange={handleSelectChange}
+            options={shippingMethodOptions}
             placeholder="Click to select"
           />
         </div>
@@ -299,22 +327,52 @@ function ShippingAddressForm(props: ShippingAddressFormProps) {
   )
 }
 
-
-interface PaymentMethodFormProps extends ParentFormProps {
-
+ShippingAddressForm.initialValues = {
+  streetAddress: "",
+  country: "",
+  state: "",
+  postalCode: "",
+  shippingMethod: "",
 }
-function PaymentMethodForm(props: PaymentMethodFormProps) {
-  const handleSelectChange = useCallback((selectedOption: SelectOption) => {
-    console.log(selectedOption);
-  }, []);
 
-  const options: SelectOption[] = useMemo(() => {
-    return [
-      { value: 'option1', label: 'Option 1' },
-      { value: 'option2', label: 'Option 2' },
-      { value: 'option3', label: 'Option 3' },
-    ];
-  }, [])
+ShippingAddressForm.validationSchema = Yup.object().shape({
+  streetAddress: Yup.string().required("Please enter a street address").min(2, "Must be at least 2 characters").max(100, 'Must be 100 characters or less'),
+  country: Yup.string().required("Please select a country"),
+  state: Yup.string().required("Please select a state"),
+  postalCode: Yup.string().required("Please enter a postal code"),
+  shippingMethod: Yup.string().required("Please select shipping method"),
+});
+
+interface PaymentMethodFormProps extends ParentFormProps { }
+function PaymentMethodForm(props: PaymentMethodFormProps) {
+
+  const cardTypesOptions = [
+    { value: 'visa', label: 'Visa' },
+    { value: 'mastercard', label: 'MasterCard' },
+    { value: 'amex', label: 'American Express' },
+    { value: 'discover', label: 'Discover' },
+  ];
+
+  const cardExpirationMonths = [
+    { value: "1", label: 'January' },
+    { value: "2", label: 'February' },
+    { value: "3", label: 'March' },
+    { value: "4", label: 'April' },
+    { value: "5", label: 'May' },
+    { value: "6", label: 'June' },
+    { value: "7", label: 'July' },
+    { value: "8", label: 'August' },
+    { value: "9", label: 'September' },
+    { value: "10", label: 'October' },
+    { value: "11", label: 'November' },
+    { value: "12", label: 'December' },
+  ];
+
+  const currentYear = new Date().getFullYear();
+  const cardExpirationYears = Array.from({ length: 10 }, (_, i) => ({
+    value: `${currentYear + i}`,
+    label: `${currentYear + i}`,
+  }));
 
   return (
     <>
@@ -328,8 +386,7 @@ function PaymentMethodForm(props: PaymentMethodFormProps) {
           label="Card Type"
           name="cardType"
           required={true}
-          options={options}
-          onChange={handleSelectChange}
+          options={cardTypesOptions}
           placeholder="Click to select card type"
         />
 
@@ -343,18 +400,16 @@ function PaymentMethodForm(props: PaymentMethodFormProps) {
         <div className={styles["input-group"]}>
           <AppSelect
             label="Expiration Date"
-            name="expireMonthDate"
+            name="expirationDate.month"
             required={true}
-            options={options}
-            onChange={handleSelectChange}
+            options={cardExpirationMonths}
             placeholder="Month"
           />
 
           <AppSelect
-            name="expireMonthYear"
+            name="expirationDate.year"
             required={true}
-            options={options}
-            onChange={handleSelectChange}
+            options={cardExpirationYears}
             placeholder="Year"
           />
         </div>
@@ -370,6 +425,28 @@ function PaymentMethodForm(props: PaymentMethodFormProps) {
     </>
   )
 }
+
+PaymentMethodForm.initialValues = {
+  cardType: "",
+  cardNumber: "",
+  expireMonthDate: 0,
+  expireMonthYear: 0,
+  cvv: "",
+}
+
+PaymentMethodForm.validationSchema = Yup.object().shape({
+  cardType: Yup.string().required("Please select a card type"),
+  cardNumber: Yup.number()
+    .typeError("Please enter a valid card number")
+    .required("Please select a card number"),
+  expirationDate: Yup.object().shape({
+    month: Yup.string().required("Please select a month"),
+    year: Yup.string().required("Please select a year"),
+  }),
+  cvv: Yup.number()
+    .typeError("Please enter only digits")
+    .required("Please enter your CVV Number"),
+});
 
 interface ReviewFormProps extends ParentFormProps {
 
@@ -398,3 +475,13 @@ function ReviewForm(props: ReviewFormProps) {
     </>
   );
 }
+
+ReviewForm.initialValues = {
+  termsAndConditions: false,
+}
+ReviewForm.validationSchema = Yup.object().shape({
+  agreement: Yup.boolean().oneOf(
+    [true],
+    "You must agree to this to continue"
+  ),
+});
