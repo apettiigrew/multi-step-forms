@@ -17,6 +17,7 @@ import { paymentDetailsFormFields, personalDetailsFormValues, reviewFormFields, 
 import { ShippingAddressForm } from "@/components/form/shipping-address-form/shipping-address-form";
 import { PaymentDetailsForm } from "@/components/form/payment-details-form/payment-details-form";
 import { ReviewForm } from "@/components/form/review-form/review-form";
+import { AppConfetti } from "@/hooks/use-confetti";
 
 export interface ParentFormProps {
   formik?: FormikProps<FormikValues>,
@@ -83,9 +84,19 @@ const baseSteps = [
   },
 ];
 
+export enum FormState {
+  idle,
+  sending,
+  success,
+  error,
+}
+
+
 export default function CheckoutPage() {
   const steps = [...baseSteps];
   const [activeStep, setActiveStep] = useState(0);
+  const [formState, setFormState] = useState(FormState.idle);
+  const [isExploding, setIsExploding] = useState(false);
   const CurrentStep = steps[activeStep];
 
   const initialValues = steps.reduce((values, { initialValues: initValues }) => ({
@@ -119,8 +130,13 @@ export default function CheckoutPage() {
   };
 
   const submitForm = async (values: FormikValues) => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values)
+    setFormState(FormState.success);
+    setIsExploding(true);
+    // setIsExploding(true) after 5 seconds
+    setTimeout(() => {
+      setIsExploding(false);
+    }, 5000);
+
     alert(JSON.stringify(values, null, 2));
   };
 
@@ -220,12 +236,15 @@ export default function CheckoutPage() {
                     </RenderIf>
                   </div>
                 </Form>
-
               )}
             </Formik>
           </div>
         </div>
       </div>
+
+      {/* Display Confetti when done */}
+      {(formState === FormState.success) && <AppConfetti />}
+      {/* {(formState === FormState.success && isExploding) && <AppConfetti />} */}
     </main >
   );
 }
