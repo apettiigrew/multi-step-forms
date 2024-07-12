@@ -12,6 +12,7 @@ interface AppSelectProps {
     name: string;
     required: boolean;
     options: Option[];
+    validate: (value: string) => string | undefined;
     // formik?: FormikProps<FormikValues>,
     onChange?: (selectedOption: Option) => void;
     placeholder?: string;
@@ -19,7 +20,7 @@ interface AppSelectProps {
 
 export function AppSelect(props: AppSelectProps) {
     const { label, required, name, options, onChange, placeholder } = props;
-    const [field, meta, helpers] = useField(name);
+    const [field, meta, helpers] = useField({ name, validate: props.validate });
     const { setFieldValue, values } = useFormikContext();
     const [isOpen, setIsOpen] = useState(false);
     const selectedOpt = options.find((option) => option.value === field.value);

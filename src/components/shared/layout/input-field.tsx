@@ -1,14 +1,10 @@
-// import { FieldAttributes, FieldHelperProps, useField } from "formik";
-// import { DetailedHTMLProps, InputHTMLAttributes, useCallback } from "react";
-// import Select, { ActionMeta } from 'react-select';
-import { useMemo } from "react";
-import styles from "./input-field.module.scss";
-import { FormikProps, useField } from "formik";
+
 import { FormValues } from "@/app/page";
 import { propertiesOf } from "@/app/utils/constants";
-import { useCombineClassNames } from "@/hooks/use-combine-classnames";
-import { classIf } from "@/lib/styles-utils";
-
+import { useField } from "formik";
+import { useMemo } from "react";
+import styles from "./input-field.module.scss";
+import * as Yup from "yup";
 const propof = propertiesOf<FormValues>();
 
 type Props = {
@@ -16,6 +12,7 @@ type Props = {
     label: string;
     required: boolean;
     type: string;
+    validate?: (value: string) => string | undefined;
     // formik: FormikProps<FormValues>;
     // [key: string]: any;
 };
@@ -23,8 +20,8 @@ type Props = {
 type InputFieldProps = Props;
 
 export function InputField(props: InputFieldProps) {
-    const { type, name, label, required, ...restOfProps } = props;
-    const [field, meta, helpers] = useField(name);
+    const { type, name, label, validate, required, ...restOfProps } = props;
+    const [field, meta, helpers] = useField({name,  validate});
 
     const labelText = useMemo(() => {
         return required ? `${label}*` : label;
@@ -55,7 +52,6 @@ export function InputField(props: InputFieldProps) {
                 {...field}
                 {...restOfProps}
             />
-            
             {meta.error && meta.touched && (
                 <small className={styles["error-text"]}>{meta.error}</small>
             )}
