@@ -81,7 +81,6 @@ const baseSteps = [
     fields: reviewFormFields,
     initialValues: ReviewForm.initialValues,
   },
-
 ];
 
 export default function CheckoutPage() {

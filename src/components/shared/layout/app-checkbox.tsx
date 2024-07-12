@@ -15,11 +15,17 @@ interface AppCheckboxProps {
 
 export function AppCheckbox(props: AppCheckboxProps) {
     const { name, label, required, onChange, validate, ...restOfProps } = props;
-    const [field, meta, helpers] = useField({name,  validate});
+    const [field, meta, helpers] = useField({ name, validate });
     return (
         <div className="form-control">
             <label className={styles["checkbox-option"]}>
-                <input className={styles.input} type="checkbox" {...restOfProps} {...field} />
+                <input
+                    className={styles.input}
+                    type="checkbox"
+                    checked={field.value}
+                    {...restOfProps}
+                    {...field}
+                />
                 {label}
             </label>
             {meta.error && meta.touched && (
