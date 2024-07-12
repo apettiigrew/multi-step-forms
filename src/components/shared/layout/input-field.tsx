@@ -40,7 +40,7 @@ export function InputField(props: InputFieldProps) {
     }
 
     const jcn = cn.join(" ");
-
+    
 
     return (
         <div className="form-control">
@@ -51,9 +51,11 @@ export function InputField(props: InputFieldProps) {
                 id={name}
                 type={type}
                 className={jcn}
+                onFocus={() => helpers.setTouched(false)}
                 {...field}
                 {...restOfProps}
             />
+            
             {meta.error && meta.touched && (
                 <small className={styles["error-text"]}>{meta.error}</small>
             )}

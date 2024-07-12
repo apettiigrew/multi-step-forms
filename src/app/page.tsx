@@ -18,11 +18,11 @@ export type FormValues = {
   lastName: string;
   email: string;
   phoneNumber: string;
-  // streetAddress: string;
-  // country: string;
-  // state: string;
-  // postalCode: string;
-  // shippingMethod: string;
+  streetAddress: string;
+  country: string;
+  state: string;
+  postalCode: string;
+  shippingMethod: string;
   // cardType: string;
   // cardNumber: string;
   // expireMonthDate: number;
@@ -36,11 +36,11 @@ const initialValues = {
   lastName: "",
   email: "",
   phoneNumber: "",
-  // streetAddress: "",
-  // country: "",
-  // state: "",
-  // postalCode: "",
-  // shippingMethod: "",
+  streetAddress: "",
+  country: "",
+  state: "",
+  postalCode: "",
+  shippingMethod: "",
   // cardType: "",
   // cardNumber: "",
   // expireMonthDate: 0,
@@ -52,6 +52,11 @@ const initialValues = {
 export default function CheckoutPage() {
   const [step, setStep] = useState(1);
   const nextStep = useCallback(async (formik: FormikProps<FormValues>) => {
+    console.log("I was called for step: ", step);
+    console.log("Formik values: ", formik.values);
+    console.log("Formik errors: ", formik.errors);
+    console.log("Formik touched: ", formik.touched);
+    console.log("Formik isValid: ", formik.isValid);
     if (!formik.isValid) {
       // Submit the form to force show the fields that are invalid.
       // Note: Formik first runs throught a series of validation steps before actuall call the onSubmit function.
@@ -60,11 +65,10 @@ export default function CheckoutPage() {
     }
 
     setStep((prevStep) => prevStep + 1)
-  }, []);
-  const prevStep = useCallback(() => setStep((prevStep) => prevStep - 1), []);
+  }, [step]);
+
+  const prevStep = useCallback(() => setStep((prevStep) => prevStep - 1), [step]);
   const isBackButtonVisible = useMemo(() => step > 1, [step]);
-
-
 
   const onSubmit = useCallback((values: FormValues) => {
 
@@ -102,7 +106,13 @@ export default function CheckoutPage() {
             </div>
           </div>
           <div className={styles["right-content"]}>
-            <Formik {...{ initialValues, validationSchema: validationSchema[step - 1], onSubmit, validateOnMount: true }}>
+            <Formik
+              {...{
+                initialValues,
+                validationSchema: validationSchema[step - 1],
+                onSubmit,
+                validateOnMount: true
+              }}>
               {(formik) => (
                 <Form>
                   <FormContent step={step} formik={formik} />
@@ -161,8 +171,8 @@ function FormContent(props: FormContentProps) {
   switch (step) {
     case 1:
       return <PersonalDetailsForm />;
-    // case 2:
-    //   return <ShippingAddressForm formik={formik} />;
+    case 2:
+      return <ShippingAddressForm />;
     // case 3:
     //   return <PaymentMethodForm formik={formik} />;
     // case 4:
@@ -188,7 +198,6 @@ function PersonalDetailsForm(props: PersonalDetailsFormProps) {
       <div>
         <div className={styles["form-content"]}>
           <InputField
-            // formik={formik}
             type="text"
             name="firstName"
             label="First Name"
