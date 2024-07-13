@@ -34,7 +34,7 @@
   <img src="./assets/screenshot-1.png" alt="screenshot" />
 </div>
 <div align="center"> 
-  ![](assets/gif1.gif)
+  ![]([assets](https://github.com/nestjs-multi-step-form-with-formik/asssets/gif1.gif)
 </div>
 
 
