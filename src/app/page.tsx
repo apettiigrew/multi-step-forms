@@ -161,7 +161,6 @@ export default function CheckoutPage() {
   const threeIcon = activeStep > 1 ? <ThreeCirleIconDark className={styles.icon} /> : <ThreeCirleIcon className={styles.icon} />;
   const fourIcon = activeStep > 2 ? <FourCirleIconDark className={styles.icon} /> : <FourCirleIcon className={styles.icon} />;
 
-
   return (
     <main className={styles.main}>
       <div className={styles.container}>
