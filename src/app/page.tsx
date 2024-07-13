@@ -10,7 +10,7 @@ import { AppConfetti } from "@/hooks/use-confetti";
 import { FormState } from "@/lib/utils/constants";
 import { paymentDetailsFormFields, personalDetailsFormValues, reviewFormFields, shippingAddressFormFields } from "@/models/form-field-model";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { RenderIf } from "../lib/render-if";
 import styles from "./page.module.scss";
 
@@ -62,10 +62,13 @@ export default function CheckoutPage() {
   const [isExploding, setIsExploding] = useState(false);
   const CurrentStep = steps[activeStep];
 
-  const initialValues = steps.reduce((values, { initialValues: initValues }) => ({
-    ...values,
-    ...initValues,
-  }), {});
+  const initialValues = useMemo(() => {
+    return steps.reduce((values, { initialValues: initValues }) => ({
+      ...values,
+      ...initValues,
+    }), {})
+  }, []);
+
   const isLastStep = useMemo(() => {
     return activeStep === steps.length - 1;
   }, [activeStep]);
@@ -90,7 +93,8 @@ export default function CheckoutPage() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const submitForm = async (values: FormikValues) => {
+
+  const submitForm = useCallback(async (values: FormikValues) => {
     setFormState(FormState.success);
     setIsExploding(true);
     // setIsExploding(true) after 5 seconds
@@ -99,7 +103,7 @@ export default function CheckoutPage() {
     }, 5000);
 
     alert(JSON.stringify(values, null, 2));
-  };
+  }, []);
 
   const handleSubmit = async (formik: FormikProps<FormikValues>) => {
 
@@ -121,10 +125,21 @@ export default function CheckoutPage() {
   };
 
   const isBackButtonVisible = useMemo(() => activeStep > 0, [activeStep]);
-  const oneIcon = (activeStep === 0 || activeStep > 0) ? <OneCirleIconDark className={styles.icon} /> : <OneCirleIcon className={styles.icon} />;
-  const twoIcon = activeStep > 0 ? <TwoCirleIconDark className={styles.icon} /> : <TwoCirleIcon className={styles.icon} />;
-  const threeIcon = activeStep > 1 ? <ThreeCirleIconDark className={styles.icon} /> : <ThreeCirleIcon className={styles.icon} />;
-  const fourIcon = activeStep > 2 ? <FourCirleIconDark className={styles.icon} /> : <FourCirleIcon className={styles.icon} />;
+  const oneIcon = useMemo(() => (
+    (activeStep === 0 || activeStep > 0) ? <OneCirleIconDark className={styles.icon} /> : <OneCirleIcon className={styles.icon} />
+  ), [activeStep]);
+
+  const twoIcon = useMemo(() => (
+    activeStep > 0 ? <TwoCirleIconDark className={styles.icon} /> : <TwoCirleIcon className={styles.icon} />
+  ), [activeStep]);
+
+  const threeIcon = useMemo(() => (
+    activeStep > 1 ? <ThreeCirleIconDark className={styles.icon} /> : <ThreeCirleIcon className={styles.icon} />
+  ), [activeStep]);
+
+  const fourIcon = useMemo(() => (
+    activeStep > 2 ? <FourCirleIconDark className={styles.icon} /> : <FourCirleIcon className={styles.icon} />
+  ), [activeStep]);
 
   return (
     <main className={styles.main}>
