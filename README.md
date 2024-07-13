@@ -32,7 +32,7 @@
   <img src="./assets/screenshot-1.png" alt="screenshot" />
 </div>
 
-![form](gif1.gif)
+![form](/assets/gif1.gif)
 
 <!-- TechStack -->
 
