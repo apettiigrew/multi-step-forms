@@ -93,6 +93,15 @@ export function PaymentDetailsForm(props: PaymentDetailsFormProps) {
     )
 }
 
+export function PaymentDetailsFormHeading() {
+    return (
+        <>
+            <SubHeading>Step 3</SubHeading>
+            <p>Select the payment method</p>
+        </>
+    )
+}
+
 PaymentDetailsForm.initialValues = {
     cardType: "",
     cardNumber: "",

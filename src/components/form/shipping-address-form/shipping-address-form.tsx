@@ -25,7 +25,7 @@ export function ShippingAddressForm(props: ShippingAddressFormProps) {
         { label: 'Express Shipping', value: 'express' },
         { label: 'Overnight Shipping', value: 'overnight' },
     ];
-    
+
     return (
         <>
             <div className={styles["right-content-headings"]}>
@@ -82,12 +82,22 @@ export function ShippingAddressForm(props: ShippingAddressFormProps) {
     )
 }
 
+export function ShippingDetailsFormHeading() {
+    return (
+        <>
+            <SubHeading>Step 2</SubHeading>
+            <p>Enter the address you want your order to be shipped to</p>
+        </>
+    )
+}
+
+
 ShippingAddressForm.initialValues = {
     streetAddress: "",
     country: "",
     state: "",
-    // postalCode: "",
-    // shippingMethod: "",
+    postalCode: "",
+    shippingMethod: "",
 }
 
 ShippingAddressForm.validationSchema = Yup.object().shape({
