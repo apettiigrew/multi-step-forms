@@ -28,13 +28,8 @@
 
 ### :camera: Screenshots
 
-<div align="center"> 
-![form](/assets/gif2.gif)
-![form](/assets/gif1.gif)
-  <!-- <img src="./assets/screenshot-1.png" alt="screenshot" /> -->
-</div>
-
-
+![form](assets/gif2.gif)
+![form](assets/gif1.gif)
 
 <!-- TechStack -->
 
