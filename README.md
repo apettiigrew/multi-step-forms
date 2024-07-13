@@ -1,14 +1,13 @@
-  
 
 <div  align="center">
 
-<h1>NestJs Multi-Step Form Using Formik</h1>
+<h1>Nextjs Multi-Step Form Using Formik</h1>
 
 <!-- Badges -->
 
 <p>
 
-<a  href="https://github.com/apettiigrew/nestjs-multi-step-form-with-formik/graphs/contributors">
+<a  href="https://github.com/apettiigrew/nextjs-multi-step-form-with-formik/graphs/contributors">
 
 <img  src="https://img.shields.io/github/contributors/Louis3797/awesome-readme-template"  alt="contributors"  />
 
@@ -16,7 +15,7 @@
 
 <a  href="">
 
-<img  src="https://img.shields.io/github/last-commit/apettiigrew/nestjs-multi-step-form-with-formik"  alt="last update"  />
+<img  src="https://img.shields.io/github/last-commit/apettiigrew/nextjs-multi-step-form-with-formik"  alt="last update"  />
 
 </a>
 
@@ -24,21 +23,12 @@
 
 <h4>
 
-<a  href="https://github.com/Louis3797/awesome-readme-template/">View Demo</a>
-
-<span> · </span>
-
-<a  href="https://github.com/apettiigrew/nestjs-multi-step-form-with-formik/issues/">Request Feature</a>
-
+[View Demo](https://duckduckgo.com) <span> · </span> [Feature Request](https://github.com/apettiigrew/nextjs-multi-step-form-with-formik/issues/)
 </h4>
 
 </div>
 
-  
-
 <br  />
-
-  
 
 <!-- About the Project -->
 
@@ -60,6 +50,30 @@ Your users should be able to:
     -   A step is submitted, but no selection has been made
 
   
+
+In this project, we’ll build a checkout form. The form is going to have four steps. In the first step of the form, we’ll have fields for the user’s personal details. In the second step, we’ll include fields for the user’s shipping details. In the third step, we’ll have fields for the payment details. In the final step, we’ll include a checkbox field that the user needs to check to confirm if the information they supplied is accurate. The user interface design of all the steps in the form gives us the direction we need.
+
+Your users should be able to:
+
+- Complete each step of the sequence
+- Go back to a previous step to update their selections
+- See a summary of their selections on the final step and confirm their order
+- Receive form validation messages if:
+  - A field has been missed
+  - The email address is not formatted correctly
+  - A step is submitted, but no selection has been made
+
+In this project, we’ll build a checkout form. The form is going to have four steps. In the first step of the form, we’ll have fields for the user’s personal details. In the second step, we’ll include fields for the user’s shipping details. In the third step, we’ll have fields for the payment details. In the final step, we’ll include a checkbox field that the user needs to check to confirm if the information they supplied is accurate. The user interface design of all the steps in the form gives us the direction we need.
+
+Your users should be able to:
+
+- Complete each step of the sequence
+- Go back to a previous step to update their selections
+- See a summary of their selections on the final step and confirm their order
+- Receive form validation messages if:
+  - A field has been missed
+  - The email address is not formatted correctly
+  - A step is submitted, but no selection has been made
 
 <!-- Screenshots -->
 
@@ -103,10 +117,6 @@ Your users should be able to:
 
 <!-- Env Variables -->
 
-  
-  
-  
-
 <!-- Getting Started -->
 
   
@@ -137,7 +147,7 @@ Clone the project
 
 ```bash
 
-git  clone  git@github.com:apettiigrew/nestjs-multi-step-form-with-formik.git
+git  clone  git@github.com:apettiigrew/nextjs-multi-step-form-with-formik.git
 
 ```
 
@@ -149,7 +159,7 @@ Go to the project directory
 
 ```bash
 
-cd  nestjs-multi-step-form-with-formik
+cd  nextjs-multi-step-form-with-formik
 
 ```
 
@@ -179,11 +189,9 @@ npm  run  dev
 
 ## :wave: Contributing
 
-  
+<a  href="https://github.com/apettiigrew/nextjs-multi-step-form-with-formik/graphs/contributors">
 
-<a  href="https://github.com/apettiigrew/nestjs-multi-step-form-with-formik/graphs/contributors">
-
-<img  src="https://contrib.rocks/image?repo=apettiigrew/nestjs-multi-step-form-with-formik"  />
+<img  src="https://contrib.rocks/image?repo=apettiigrew/nextjs-multi-step-form-with-formik"  />
 
 </a>
 
