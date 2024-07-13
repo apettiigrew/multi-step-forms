@@ -65,3 +65,11 @@ export const getCountriesOptions = (countries: Country[]) => {
 };
 
 export const propertiesOf = <TObj>(_obj: (TObj | undefined) = undefined) => <T extends keyof TObj>(name: T): T => name;
+
+
+export enum FormState {
+    idle,
+    sending,
+    success,
+    error,
+}

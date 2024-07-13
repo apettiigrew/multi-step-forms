@@ -2,19 +2,19 @@
 import { FormikProps, FormikValues, useField, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from "./app-select.module.scss";
-interface Option {
-    value: string;
-    label: string;
-}
+
+
+export type SelectOption = { value: string; label: string };
+
 
 interface AppSelectProps {
     label?: string;
     name: string;
     required: boolean;
-    options: Option[];
+    options: SelectOption[];
     validate: (value: string) => string | undefined;
     // formik?: FormikProps<FormikValues>,
-    onChange?: (selectedOption: Option) => void;
+    onChange?: (selectedOption: SelectOption) => void;
     placeholder?: string;
 }
 
@@ -25,10 +25,10 @@ export function AppSelect(props: AppSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const selectedOpt = options.find((option) => option.value === field.value);
 
-    const [selectedOption, setSelectedOption] = useState<Option | null>(selectedOpt || null);
+    const [selectedOption, setSelectedOption] = useState<SelectOption | null>(selectedOpt || null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const handleOptionClick = (option: Option) => {
+    const handleOptionClick = (option: SelectOption) => {
         setSelectedOption(option);
         setIsOpen(false);
         setFieldValue(name, option.value);

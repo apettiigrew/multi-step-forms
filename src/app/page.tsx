@@ -6,35 +6,25 @@ import { ShippingAddressForm, ShippingDetailsFormHeading } from "@/components/fo
 import { StepLabel } from "@/components/form/step-label/step-label";
 import { FourCirleIcon, FourCirleIconDark, OneCirleIcon, OneCirleIconDark, ThreeCirleIcon, ThreeCirleIconDark, TwoCirleIcon, TwoCirleIconDark } from "@/components/shared/icons/icons";
 import { AppButton, AppButtonVariation } from "@/components/shared/layout/buttons";
-import { SubHeading } from "@/components/text/subheading";
 import { AppConfetti } from "@/hooks/use-confetti";
+import { FormState } from "@/lib/utils/constants";
 import { paymentDetailsFormFields, personalDetailsFormValues, reviewFormFields, shippingAddressFormFields } from "@/models/form-field-model";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import { useMemo, useState } from "react";
+import { RenderIf } from "../lib/render-if";
 import styles from "./page.module.scss";
-import { RenderIf } from "./utils/render-if";
+
+
+// export const metadata: Metadata = {
+//   creator: 'Andrew Pettigrew',
+//   authors: [{ name: 'Andrew Pettigrew', url: 'https://www.linkedin.com/in/andrewpettigrew/' }],
+//   title: "Multi Step Form",
+//   description: "A multi-step form that allows users to enter their personal details, shipping address, payment details, and review their order before submitting.",
+// };
 
 export interface ParentFormProps {
   formik?: FormikProps<FormikValues>,
 }
-
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  phoneNumber: "",
-  streetAddress: "",
-  country: "",
-  state: "",
-  postalCode: "",
-  shippingMethod: "",
-  cardType: "",
-  cardNumber: "",
-  expireMonthDate: 0,
-  expireMonthYear: 0,
-  cvv: "",
-  termsAndConditions: false,
-};
 
 const baseSteps = [
   {
@@ -64,13 +54,6 @@ const baseSteps = [
     heading: ReviewFormHeading
   },
 ];
-
-export enum FormState {
-  idle,
-  sending,
-  success,
-  error,
-}
 
 export default function CheckoutPage() {
   const steps = [...baseSteps];
@@ -226,35 +209,4 @@ export default function CheckoutPage() {
       {/* {(formState === FormState.success && isExploding) && <AppConfetti />} */}
     </main >
   );
-}
-
-
-function StepLabelControl() {
-  return (
-    <>
-      <div className={styles["left-content-headings"]}>
-        <SubHeading>Step 1</SubHeading>
-        <p>Enter your personal information to continue to checkout.</p>
-      </div>
-      <div className={styles["step-label-container"]}>
-        <StepLabel
-          icon={<OneCirleIcon className={styles.icon} />}
-          label={"Personal Details"}
-        />
-        <StepLabel
-          icon={<TwoCirleIcon className={styles.icon} />}
-          label={"Shipping Address"}
-        />
-
-        <StepLabel
-          icon={<ThreeCirleIcon className={styles.icon} />}
-          label={"Payment Method"}
-        />
-        <StepLabel
-          icon={<FourCirleIcon className={styles.icon} />}
-          label={"Review"}
-        />
-      </div>
-    </>
-  )
 }
