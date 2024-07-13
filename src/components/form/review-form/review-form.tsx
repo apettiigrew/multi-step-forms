@@ -4,30 +4,30 @@ import { SubHeading } from "@/components/text/subheading";
 import styles from "./review-form.module.scss";
 import * as Yup from "yup";
 import { isRequired } from "@/app/validation-schema";
+import { FormLayout } from "@/components/shared/layout/form-layout";
+import React from "react";
 
 interface ReviewFormProps extends ParentFormProps { }
 export function ReviewForm(props: ReviewFormProps) {
 
     return (
-        <>
-            <div className={styles["right-content-headings"]}>
+        <FormLayout>
+            <React.Fragment>
                 <SubHeading>Review</SubHeading>
                 <p className={styles["heading-text"]}>
                     Review the information to be sure they are accurate and if all is
                     good click the checkbox below and click the button to checkout.
                 </p>
-            </div>
-
-
-            <div className={styles["form-content"]}>
+            </React.Fragment>
+            <React.Fragment>
                 <AppCheckbox
                     name="termsAndConditions"
                     label="I agree to the terms and conditions"
                     required={true}
                     validate={isRequired}
                 />
-            </div>
-        </>
+            </React.Fragment>
+        </FormLayout>
     );
 }
 

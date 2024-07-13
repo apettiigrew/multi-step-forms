@@ -5,6 +5,8 @@ import { SubHeading } from "@/components/text/subheading";
 import styles from "./payment-details-form.module.scss";
 import { isRequired, validateCardType } from "@/app/validation-schema";
 import * as Yup from "yup";
+import { FormLayout } from "@/components/shared/layout/form-layout";
+import React from "react";
 
 interface PaymentDetailsFormProps extends ParentFormProps { }
 export function PaymentDetailsForm(props: PaymentDetailsFormProps) {
@@ -38,12 +40,12 @@ export function PaymentDetailsForm(props: PaymentDetailsFormProps) {
     }));
 
     return (
-        <>
-            <div className={styles["right-content-headings"]}>
+        <FormLayout>
+            <React.Fragment>
                 <SubHeading>Payment Method</SubHeading>
                 <p>Select the payment method.</p>
-            </div>
-            <div className={styles["form-content"]}>
+            </React.Fragment>
+            <React.Fragment>
                 <AppSelect
                     label="Card Type"
                     name="cardType"
@@ -87,9 +89,8 @@ export function PaymentDetailsForm(props: PaymentDetailsFormProps) {
                     required={true}
                     validate={isRequired}
                 />
-            </div>
-
-        </>
+            </React.Fragment>
+        </FormLayout>
     )
 }
 

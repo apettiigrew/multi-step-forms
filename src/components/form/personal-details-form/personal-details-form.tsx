@@ -4,11 +4,10 @@ import { SubHeading } from "@/components/text/subheading";
 import styles from "./personal-details-form.module.scss"
 import * as Yup from "yup";
 import { ParentFormProps } from "@/app/page";
+import { FormLayout } from "@/components/shared/layout/form-layout";
+import React from "react";
 
-interface PersonalDetailsFormProps extends ParentFormProps {
-
-}
-
+interface PersonalDetailsFormProps extends ParentFormProps {}
 PersonalDetailsForm.initialValues = {
     firstName: "",
     lastName: "",
@@ -24,16 +23,17 @@ PersonalDetailsForm.validationSchema = Yup.object().shape({
 });
 
 export function PersonalDetailsForm(props: PersonalDetailsFormProps) {
-    const { formik } = props;
+   
     return (
         <>
-            <div className={styles["right-content-headings"]}>
-                <SubHeading>Personal Details</SubHeading>
-                <p>Enter your perosnal information to continue to checkout.</p>
-            </div>
-
-            <div>
-                <div className={styles["form-content"]}>
+            <FormLayout>
+                <React.Fragment>
+                    <div className={styles["right-content-headings"]}>
+                        <SubHeading>Personal Details</SubHeading>
+                        <p>Enter your perosnal information to continue to checkout.</p>
+                    </div>
+                </React.Fragment>
+                <React.Fragment>
                     <InputField
                         type="text"
                         name="firstName"
@@ -63,8 +63,8 @@ export function PersonalDetailsForm(props: PersonalDetailsFormProps) {
                         required={false}
                         validate={validatePhoneNumber}
                     />
-                </div>
-            </div>
+                </React.Fragment>
+            </FormLayout>
         </>
     )
 }

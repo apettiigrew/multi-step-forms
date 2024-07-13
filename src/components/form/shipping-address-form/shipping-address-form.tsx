@@ -5,6 +5,8 @@ import { InputField } from "@/components/shared/layout/input-field";
 import { SubHeading } from "@/components/text/subheading";
 import * as Yup from "yup";
 import styles from "./shipping-address-form.module.scss";
+import { FormLayout } from "@/components/shared/layout/form-layout";
+import React from "react";
 
 interface ShippingAddressFormProps extends ParentFormProps { }
 export function ShippingAddressForm(props: ShippingAddressFormProps) {
@@ -27,13 +29,13 @@ export function ShippingAddressForm(props: ShippingAddressFormProps) {
     ];
 
     return (
-        <>
-            <div className={styles["right-content-headings"]}>
+
+        <FormLayout>
+            <React.Fragment>
                 <SubHeading>Shipping Address</SubHeading>
                 <p>Enter the address you want your order to be shipped to</p>
-            </div>
-
-            <div className={styles["form-content"]}>
+            </React.Fragment>
+            <React.Fragment>
                 <InputField
                     type="text"
                     name="streetAddress"
@@ -67,7 +69,6 @@ export function ShippingAddressForm(props: ShippingAddressFormProps) {
                         required={true}
                         validate={validatePostalCode}
                     />
-
                     <AppSelect
                         label="Shipping Method"
                         name="shippingMethod"
@@ -77,8 +78,8 @@ export function ShippingAddressForm(props: ShippingAddressFormProps) {
                         placeholder="Click to select"
                     />
                 </div>
-            </div>
-        </>
+            </React.Fragment>
+        </FormLayout>
     )
 }
 
@@ -90,7 +91,6 @@ export function ShippingDetailsFormHeading() {
         </>
     )
 }
-
 
 ShippingAddressForm.initialValues = {
     streetAddress: "",
@@ -104,6 +104,6 @@ ShippingAddressForm.validationSchema = Yup.object().shape({
     streetAddress: Yup.string().required("Please enter a street address").min(2, "Must be at least 2 characters").max(100, 'Must be 100 characters or less'),
     country: Yup.string().required("Please select a country"),
     state: Yup.string().required("Please select a state"),
-    // postalCode: Yup.string().required("Please enter a postal code"),
-    // shippingMethod: Yup.string().required("Please select shipping method"),
+    postalCode: Yup.string().required("Please enter a postal code"),
+    shippingMethod: Yup.string().required("Please select shipping method"),
 });

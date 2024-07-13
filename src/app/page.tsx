@@ -93,7 +93,6 @@ export default function CheckoutPage() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-
   const submitForm = useCallback(async (values: FormikValues) => {
     setFormState(FormState.success);
     setIsExploding(true);
