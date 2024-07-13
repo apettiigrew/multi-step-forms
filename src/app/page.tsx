@@ -18,24 +18,6 @@ export interface ParentFormProps {
   formik?: FormikProps<FormikValues>,
 }
 
-export type FormValues = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  streetAddress: string;
-  country: string;
-  state: string;
-  postalCode: string;
-  shippingMethod: string;
-  // cardType: string;
-  // cardNumber: string;
-  // expireMonthDate: number;
-  // expireMonthYear: number;
-  // cvv: string;
-  // termsAndConditions: boolean;
-};
-
 const initialValues = {
   firstName: "",
   lastName: "",
