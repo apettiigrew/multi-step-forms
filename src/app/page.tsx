@@ -4,7 +4,7 @@ import { PersonalDetailsForm, PersonalDetailsFormHeading } from "@/components/fo
 import { ReviewForm, ReviewFormHeading } from "@/components/form/review-form/review-form";
 import { ShippingAddressForm, ShippingDetailsFormHeading } from "@/components/form/shipping-address-form/shipping-address-form";
 import { StepLabel } from "@/components/form/step-label/step-label";
-import { FourCirleIcon, OneCirleIcon, ThreeCirleIcon, TwoCirleIcon } from "@/components/shared/icons/icons";
+import { FourCirleIcon, FourCirleIconDark, OneCirleIcon, OneCirleIconDark, ThreeCirleIcon, ThreeCirleIconDark, TwoCirleIcon, TwoCirleIconDark } from "@/components/shared/icons/icons";
 import { AppButton, AppButtonVariation } from "@/components/shared/layout/buttons";
 import { SubHeading } from "@/components/text/subheading";
 import { AppConfetti } from "@/hooks/use-confetti";
@@ -156,6 +156,11 @@ export default function CheckoutPage() {
   };
 
   const isBackButtonVisible = useMemo(() => activeStep > 0, [activeStep]);
+  const oneIcon = (activeStep === 0 || activeStep > 0) ? <OneCirleIconDark className={styles.icon} /> : <OneCirleIcon className={styles.icon} />;
+  const twoIcon = activeStep > 0 ? <TwoCirleIconDark className={styles.icon} /> : <TwoCirleIcon className={styles.icon} />;
+  const threeIcon = activeStep > 1 ? <ThreeCirleIconDark className={styles.icon} /> : <ThreeCirleIcon className={styles.icon} />;
+  const fourIcon = activeStep > 2 ? <FourCirleIconDark className={styles.icon} /> : <FourCirleIcon className={styles.icon} />;
+
 
   return (
     <main className={styles.main}>
@@ -167,20 +172,20 @@ export default function CheckoutPage() {
             </div>
             <div className={styles["step-label-container"]}>
               <StepLabel
-                icon={<OneCirleIcon className={styles.icon} />}
+                icon={oneIcon}
                 label={"Personal Details"}
               />
               <StepLabel
-                icon={<TwoCirleIcon className={styles.icon} />}
+                icon={twoIcon}
                 label={"Shipping Address"}
               />
 
               <StepLabel
-                icon={<ThreeCirleIcon className={styles.icon} />}
+                icon={threeIcon}
                 label={"Payment Method"}
               />
               <StepLabel
-                icon={<FourCirleIcon className={styles.icon} />}
+                icon={fourIcon}
                 label={"Review"}
               />
             </div>
