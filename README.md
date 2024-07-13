@@ -34,7 +34,7 @@
   <img src="./assets/screenshot-1.png" alt="screenshot" />
 </div>
 <div align="center"> 
-  ![](https://github.com/apettiigrew/nestjs-multi-step-form-with-formik/blob/3a5911630891285c7fdda0003980f539ddb5d158/assets/gif1.gif)
+  ![]([https://github.com/apettiigrew/nestjs-multi-step-form-with-formik/blob/3a5911630891285c7fdda0003980f539ddb5d158/assets/gif1.gif](https://github.com/apettiigrew/nestjs-multi-step-form-with-formik/blob/main/assets/gif1.gif))
   
 </div>
 
