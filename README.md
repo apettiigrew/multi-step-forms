@@ -23,7 +23,7 @@
 
 <h4>
 
-[View Demo](https://duckduckgo.com) <span> · </span> [Feature Request](https://github.com/apettiigrew/nextjs-multi-step-form-with-formik/issues/)
+[View Demo](https://nextjs-multi-step-form-with-formik-9cxg.vercel.app) <span> · </span> [Feature Request](https://github.com/apettiigrew/nextjs-multi-step-form-with-formik/issues/)
 </h4>
 
 </div>
